@@ -1,0 +1,40 @@
+Option Explicit
+Option Private Module
+
+Private Sub buscaIntervaloDinamico()
+    Dim sPalavra As String
+    Dim rngTermo As Excel.Range
+    Dim rngTermo2 As Excel.Range
+    Dim rngAtivos As Excel.Range
+    Dim shAtivos As Excel.Worksheet
+    Dim strInicio As String
+    Dim strFim As String
+    
+    'o texto a ser buscado
+    sPalavra = "texto-a"
+
+    'busca a 1ª e 2ªs ocorrências do texto
+    Set rngTermo = Range("A1:E999").Find(what:=sPalavra, After:=Range("A1"), _
+    searchorder:=xlByColumns, searchdirection:=xlPrevious)
+    
+    Set rngTermo2 = Range("A1:E999").Find(what:=sPalavra, After:=rngTermo)
+
+'"Debug" para confirmar as posições das ocorrências das palavras
+'    strInicio = rngTermo.Address
+'    strFim = rngTermo2.Address
+    
+    'copia o intervalo entre a 1ª e 2ª ocorrência da palavra e cola na aba indicada
+    Range("A5:E5", rngTermo).Copy
+    ThisWorkbook.Worksheets("ABA DESTINO").PasteSpecial Paste: xlValues
+    'Apaga a seleção
+    Application.CutCopyMode = False
+    
+    
+'"Debug" para confirmar que as posições foram capturadas
+'    MsgBox (strInicio)
+'    MsgBox (strFim)
+    
+
+   
+
+End Sub
